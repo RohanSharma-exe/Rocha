@@ -1,23 +1,26 @@
-# tests.py
-from functions.get_file_content import get_file_content
+from functions.run_python_file import run_python_file
 
-def main():
-    print("--- Testing Truncation ---")
-    # This will test the truncation functionality
-    print(get_file_content("calculator", "lorem.txt"))
-    print("\n--- Testing Standard File Read ---")
-    # This should return the full content of main.py
-    print(get_file_content("calculator", "main.py"))
-    print("\n--- Testing Nested File Read ---")
-    # This should return the full content of the nested calculator.py
-    print(get_file_content("calculator", "pkg/calculator.py"))
-    print("\n--- Testing Directory Traversal Error ---")
-    # This should return an error for being outside the working directory
-    print(get_file_content("calculator", "../../../../../../../../../bin/cat")) # Adjusted path for a common example
-    print("\n--- Testing File Not Found Error ---")
-    # This should return an error because the file does not exist
-    print(get_file_content("calculator", "pkg/does_not_exist.py"))
+# Test case 1: Run calculator's main.py without arguments
+print("--- Running calculator/main.py (no args) ---")
+print(run_python_file("calculator", "main.py"))
+print("-------------------------------------------\n")
 
+# Test case 2: Run calculator's main.py with an argument
+print("--- Running calculator/main.py with '3 + 5' ---")
+print(run_python_file("calculator", "main.py", ["3 + 5"]))
+print("-------------------------------------------\n")
 
-if __name__ == "__main__":
-    main()
+# Test case 3: Run the calculator's test file
+print("--- Running calculator/tests.py ---")
+print(run_python_file("calculator", "tests.py"))
+print("-------------------------------------------\n")
+
+# Test case 4: Attempt to run a file outside the working directory (should fail)
+print("--- Attempting directory traversal ---")
+print(run_python_file("calculator", "../main.py"))
+print("-------------------------------------------\n")
+
+# Test case 5: Attempt to run a file that doesn't exist (should fail)
+print("--- Attempting to run nonexistent.py ---")
+print(run_python_file("calculator", "nonexistent.py"))
+print("-------------------------------------------\n")
